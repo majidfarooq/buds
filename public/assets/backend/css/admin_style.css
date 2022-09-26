@@ -1,0 +1,37 @@
+body {
+  font-size: 20px;
+  color: #000;
+}
+
+h1 {
+  font-size: 3rem;
+  color: #000;
+}
+
+img {
+  max-width: 100%;
+}
+
+form {
+  text-align: center;
+}
+
+form.user .form-control-user {
+  border-radius: 0.5rem;
+  padding: 1.5rem 1rem;
+  height: 55px;
+  font-size: 20px;
+}
+
+form.user .btn-user {
+  border-radius: 0.5rem;
+  padding: .8rem 3rem;
+  background-color: #2B324F;
+  font-size: 1.5rem;
+  margin: 60px auto 0 auto;
+  width: auto;
+}
+
+.sidebar .sidebar-brand {
+  height: auto;
+}

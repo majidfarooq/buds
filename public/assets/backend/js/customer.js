@@ -26,10 +26,15 @@ function googleApiLocation() {
       geocoder.geocode({ 'latLng': latlng }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           if (results[0]) {
-            var lat = ((results[0].geometry.viewport.Ab.hi + results[0].geometry.viewport.Ab.lo) / 2)
-            var long = ((results[0].geometry.viewport.Va.hi + results[0].geometry.viewport.Va.lo) / 2)
-            var billing_coordinates = lat + ',' + long
+            var key1 = Object.keys(results[0].geometry.viewport)[0];
+            var key2 = Object.keys(results[0].geometry.viewport)[1];
             console.log(results[0]);
+            console.log(key1, key1);
+            var lat = ((results[0].geometry.viewport[key1].hi + results[0].geometry.viewport[key1].lo) / 2)
+            var long = ((results[0].geometry.viewport[key2].hi + results[0].geometry.viewport[key2].lo) / 2)
+            // var lat = 'aaa';
+            // var long = 'bbb';
+            var billing_coordinates = lat + ',' + long
             // var billing_coordinates = ('a,b');
             console.log(results[0].geometry.viewport);
             var address = results[0].formatted_address;
@@ -41,6 +46,8 @@ function googleApiLocation() {
             document.getElementById('billing_city').value = city;
             document.getElementById('billing_zip').value = pin;
             document.getElementById('billing_coordinates').value = billing_coordinates;
+            document.getElementById('billing_lat').value = lat;
+            document.getElementById('billing_long').value = long;
           }
         }
       });
@@ -62,11 +69,15 @@ function googleApiLocationForbusiness() {
       geocoder.geocode({ 'latLng': latlng }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           if (results[0]) {
+            // console.log(results[0]);
+            var key1 = Object.keys(results[0].geometry.viewport)[0];
+            var key2 = Object.keys(results[0].geometry.viewport)[1];
             console.log(results[0]);
-            // var lat = ((results[0].geometry.viewport.Bb.hi + results[0].geometry.viewport.Bb.lo) / 2);
-            // var long = ((results[0].geometry.viewport.Va.hi + results[0].geometry.viewport.Va.lo) / 2);
-            // var delivery_coordinates = lat + ',' + long;
-            var delivery_coordinates = ('a,b');
+            console.log(key1, key1);
+            var lat = ((results[0].geometry.viewport[key1].hi + results[0].geometry.viewport[key1].lo) / 2)
+            var long = ((results[0].geometry.viewport[key2].hi + results[0].geometry.viewport[key2].lo) / 2)
+            var delivery_coordinates = lat + ',' + long;
+            // var delivery_coordinates = ('a,b');
             var address = results[0].formatted_address;
             var pin = results[0].address_components[results[0].address_components.length - 1].long_name;
             var country = results[0].address_components[results[0].address_components.length - 2].long_name;
@@ -76,6 +87,8 @@ function googleApiLocationForbusiness() {
             document.getElementById('delivery_city').value = city;
             document.getElementById('delivery_zip').value = pin;
             document.getElementById('delivery_coordinates').value = delivery_coordinates;
+            document.getElementById('delivery_lat').value = lat;
+            document.getElementById('delivery_long').value = long;
           }
         }
       });
@@ -155,9 +168,6 @@ $.validator.addMethod("sameAsBillingAddressedChecked", function (val, ele, arg) 
   if ($("#same_as_billing_address").is(":checked") && ($.trim(val) == '')) { return false; }
   return true;
 }, "This field is required if delivery address is not same as business address");
-
-
-
 
 $("#registerAdmin").validate({
   rules: {

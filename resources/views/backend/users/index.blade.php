@@ -38,35 +38,22 @@
 
   <!-- DataTales Example -->
   <div class="card shadow shadow mb-4 user-list p-4">
-    <div class="d-flex justify-content-between align-items-center pt-3 mx-3">
-      <h5>Customers</h5>
+    <div class="d-flex justify-content-between align-items-center pt-3 pb-4">
+      <h5 class="w-100">Customers
+        <a class="btn btn-primary btn-user float-right" href="{{ route('admin.users.create') }}"><h4 class="mb-0">Create New Customer</h4></a></h5>
     </div>
-    <div class="d-flex justify-content-end p-1 mx-3 mb-4">
-            <a class="btn btn-primary btn-user" href="{{ route('admin.users.create') }}"><h4 class="mb-0">Create New Customer</h4></a>
-    </div>
-    <div class="d-flex justify-content-end p-1 mx-3">
-        {{-- <div class="new-leader">
-        <h6>New Leads: {{ $leads }}</h6>
-        <h6>Total Clients: {{ $total }}</h6>
-        <h6>Active Clients: {{ $active }}</h6>
-        </div> --}}
-        <div class="new-leader buy-email">
-        <div class="input-group">
-        <div class="form-outline d-flex align-items-center">
-          <label class="mr-2 mb-0">Search</label>
-          <input type="search" onkeyup="searchResultsAJAX(this)" id="form1" placeholder="search" class="form-control" /></div>
-        </div>
-        </div>
+    <div class="d-flex justify-content-end p-1 mb-4">
+
     </div>
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped" id="">
+    <div class="card-body p-0">
+        <div class="table-responsive user-package">
+            <table class="table table-bordered table-striped" id="users">
                 <thead>
                     <th>DOJ</th>
-                    <th>Cystomer Name</th>
-                    <th>Email</th>
-                    <th>Delivery Area </th>
+                    <th>Customer Name</th>
+                    <th>Contact </th>
+                    <th>Delivery Address </th>
                     <th>Status</th>
                     <th class="not-export-col"></th>
                 </thead>
@@ -76,31 +63,38 @@
                     @foreach ($users as $user)
                     <tr role="row" class="even">
                         @php  $encrypted=\App\Http\Controllers\backend\AdminController::makeEncryption($user->id)  @endphp
-                        <td>{{ \Carbon\Carbon::parse($user->created_at)->format('m-d-Y') }}</td>
+                        <td>
+                            {{ \Carbon\Carbon::parse($user->created_at)->format('j M Y') }}
+                        </td>
                         <td>{{ $user->first_name . ' ' . $user->last_name }}</td>
                         <td> {{ $user->email }}, <br>{{ $user->phone }}</td>
                         <td>{{ $user->delivery_address1 . ', '.$user->delivery_address2}}, <br>{{ $user->delivery_zip . ', '.$user->delivery_city}} </td>
                         <td align="center" class="status status-color">{{ $user->finalStatus }}</td>
-                       
+
                         <td class=" action">
                             <a href="{{ route('admin.users.show', $user->slug) }}">
                                 <button type="submit" data-title="Show" class="btn btn-circle btn-success text-white"><i class="fa fa-eye" aria-hidden="true"></i></button>
                             </a>
-                            @if ($user->isAsinged == 1)
-                                <a href="{{ route('admin.users.edit', $encrypted) }}"><button type="submit" data-title="Edit" class="btn btn-circle btn-success text-white"><i class="fas fa-user-edit"></i></button></a>
-                                @if (Auth::user()->role == 'super_admin')
-                                    <a class="d-none" a onclick="return confirm(' you want to delete?');" href="{{ route('admin.users.destroy', $user->id) }}">
-                                        <button type="submit" data-title="Delete" class="btn btn-circle btn-success text-white"><i class="fas fa-trash-alt"></i></button>
-                                    </a>
-                                @endif
+                            <a href="{{ route('admin.users.edit', $user->slug) }}"><button type="submit" data-title="Edit" class="btn btn-circle btn-success text-white"><i class="fas fa-user-edit"></i></button></a>
+                            @if($user->deactivated === 0)
+                            <a onclick="return confirm('Do you want to Deactivate user? It will delete all related subscriptions.');" href="{{ route('admin.users.deactivate', $user->id) }}">
+                                <button type="submit" data-title="Deactivate" class="btn btn-circle btn-success text-white"><i class="fas fa-user-times"></i></button>
+                            </a>
+                            @else
+                            <a onclick="return confirm('Do you want to Activate user?');" href="{{ route('admin.users.activate', $user->id) }}">
+                                <button type="submit" data-title="Activate" class="btn btn-circle btn-success text-white"><i class="fas fa-user-plus"></i></button>
+                            </a>
                             @endif
+                            {{-- @if ($user->isAsinged == 1)
+                                @if (Auth::user()->role == 'super_admin')@endif
+                            @endif --}}
                         </td>
                     </tr>
                     @endforeach
                     @endif
                 </tbody>
             </table>
-      {!! $users->render() !!}
+      {{-- {!! $users->render() !!} --}}
     </div>
     </div>
   </div>
@@ -137,48 +131,10 @@
         console.log($(elem),$(elem).data('userid'));
     }
 
-  
+
   let message = 'Your Message Will Show Here.';
   $(document).ready(function() {
-    $('#users').DataTable({
-      dom: "Blfrtip",
-      buttons: [
-        {text: '<i class="fas fa-copy"></i>',title: 'User Copy',titleAttr: 'copy',extend: 'copy',orientation: 'portrait',pageSize: 'A4',messageTop: message,className: 'btn-primary my-2 mr-2',exportOptions: {columns: ':visible:not(.not-export-col)'}},
-        {text: '<i class="fas fa-file-csv"></i>',title: 'User Csv',titleAttr: 'Csv',extend: 'csvHtml5',orientation: 'portrait',pageSize: 'A4',messageTop: message,className: 'btn-primary my-2 mr-2',exportOptions: {columns: ':visible:not(.not-export-col)'}},
-        {text: '<i class="fas fa-file-excel"></i>',title: 'User Excel',titleAttr: 'Excel',extend: 'excelHtml5',orientation: 'portrait',pageSize: 'A4',messageTop: message,className: 'btn-primary my-2 mr-2',exportOptions: {columns: ':visible:not(.not-export-col)'}},
-        {text: '<i class="fas fa-file-pdf"></i>',title: 'User PDF',titleAttr: 'PDF',extend: 'pdfHtml5',orientation: 'portrait',pageSize: 'A4',messageTop: message,className: 'btn-primary my-2 mr-2',exportOptions: {columns: ':visible:not(.not-export-col)',}},
-        {text: '<i class="fas fa-print"></i>',title: 'User Print',titleAttr: 'Print',extend: 'print',orientation: 'portrait',pageSize: 'A4',messageTop: message,className: 'btn-primary my-2 mr-2',exportOptions: {columns: ':visible:not(.not-export-col)',}},
-      ],
-    "processing": true,
-    "serverSide": true,
-    "lengthMenu": [[10, 25, 50, -1],[10, 25, 50, "All"]],
-    "autoFill": true,
-    // "stateSave": true,
-    // "scrollY": 200,
-    // "paging": false,
-    // "responsive": true,
-    // "scrollX": true,
-    "pagingType": "full_numbers",
-    "ajax": {
-      "url": "{{ URL::route('admin.users.index') }}",
-      "dataType": "json",
-      "type": "POST",
-      "data": {
-      _token: "{{ csrf_token() }}"
-      }
-    },
-    "columns": [
-      {"data": "id"},
-      {"data": "first_name"},
-      {"data": "email"},
-      {"data": "deleted_at"},
-      {"data": "created_at"},
-      {"data": "action",className: "action",colspan: "1"},
-    ],
-    order: [
-      [4, 'desc']
-    ]
-    });
+    $('#users').DataTable();
   });
 
   </script>

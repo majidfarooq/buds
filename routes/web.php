@@ -2,17 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,7 +15,11 @@ use App\Http\Controllers\backend\{
     PageController,
     PostController,
     TagController,
-    UserController
+    UserController,
+    PackageController,
+    UserPackageController,
+    DeliveryDayController,
+    UserPackagePaymentController
 };
 
 use App\Http\Controllers\frontend\{
@@ -37,7 +30,10 @@ use App\Http\Controllers\frontend\{
 };
 
 Route::get('/', [FrontPageController::class, 'home'])->name('home');
+Route::post('/getPackages', [FrontPageController::class, 'getPackages'])->name('getPackages');
+Route::post('/selectPackage', [FrontPageController::class, 'selectPackage'])->name('selectPackage');
 Route::get('/home', [FrontPageController::class, 'home']);
+Route::get('/getNearby', [FrontPageController::class, 'getNearby'])->name('getNearby');
 Route::get('/category/{slug}', [FrontPostController::class, 'showCategory'])->name('category.show');
 Route::get('/tag/{slug}', [FrontPostController::class, 'showTag'])->name('tag.show');
 Route::get('/blog/{slug}', [FrontPostController::class, 'show'])->name('blog.show');
@@ -73,16 +69,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         Route::post('login', [AdminController::class, 'login'])->name('auth');
     });
     Route::group(['middleware' => 'admin.auth'], function () {
-        Route::view('dashboard', 'backend.dashboard.dashboard')->name('home');
-        Route::view('/', 'backend.dashboard.dashboard');
+        //Route::view('dashboard', 'backend.dashboard.dashboard')->name('home');
+        Route::any('/', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::post('logout', [AdminController::class, 'logout'])->name('logout');
         Route::get('medias', [MediaController::class, 'index'])->name('media.index');
 
         //  Accounts
         Route::group(['prefix' => 'accounts', 'as' => 'accounts.'], function () {
-            Route::get('/account', [AdminController::class, 'account'])->name('settings');
+            Route::get('/setting', [AdminController::class, 'settings'])->name('settings');
+            Route::get('/account', [AdminController::class, 'account'])->name('account');
             Route::post('/change/information', [AdminController::class, 'basicInformation'])->name('information');
             Route::post('/change/password', [AdminController::class, 'changePassword'])->name('password');
+            Route::any('/delete/{var?}', [AdminController::class, 'destroy'])->name('destroy');
+            Route::post('/updateSettings', [AdminController::class, 'updateSettings'])->name('updateSettings');
         });
         //Sub Admins
         Route::group(['prefix' => 'subadmins', 'as' => 'subadmins.'], function () {
@@ -98,11 +97,74 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
         //  Users
         Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
             Route::any('/', [UserController::class, 'index'])->name('index');
+            Route::any('/import_csv', [UserController::class, 'import_csv'])->name('import_csv');
             Route::get('/create', [UserController::class, 'create'])->name('create');
-            Route::post('/store/{var?}', [UserController::class, 'store'])->name('store');
+            Route::get('/test', [UserController::class, 'test'])->name('test');
+            Route::post('/store/{var?}', [UserController::class, 'store'])->name('store'); //assign_package
+            Route::get('/edit/{var?}', [UserController::class, 'edit'])->name('edit');
+            Route::get('/assign_package/{var?}', [UserController::class, 'assign_package'])->name('assign_package');
+            Route::any('/createUserAsingCard/{var?}', [UserController::class, 'createUserAsingCard'])->name('createUserAsingCard');
+            Route::any('/addnewCardCustomer/{var?}', [UserController::class, 'addnewCardCustomer'])->name('addnewCardCustomer');
+            Route::get('/assign_total_credits/{var?}', [UserController::class, 'assign_total_credits'])->name('assign_total_credits');
+            Route::post('/assign_package_submission/', [UserController::class, 'assign_package_submission'])->name('assign_package_submission');
+            Route::post('/assign_package_payments/', [UserController::class, 'assign_package_payments'])->name('assign_package_payments');
+            Route::post('/package_detail/', [UserController::class, 'package_detail'])->name('package_detail');
+            Route::post('/update/{var?}', [UserController::class, 'update'])->name('update');
             Route::get('/show/{var?}', [UserController::class, 'show'])->name('show');
             Route::delete('/delete/{var?}', [UserController::class, 'destroy'])->name('destroy');
+            Route::get('/deactivate/{var?}', [UserController::class, 'deactivate'])->name('deactivate');
+            Route::get('/activate/{var?}', [UserController::class, 'activate'])->name('activate');
             Route::post('/{id}/restore', [UserController::class, 'restore'])->name('restore');
+        });
+
+        //  deliveries Day
+        Route::group(['prefix' => 'delivery_days', 'as' => 'delivery_days.'], function () {
+            Route::any('/', [DeliveryDayController::class, 'index'])->name('index');
+            Route::get('/create/{var?}', [DeliveryDayController::class, 'create'])->name('create');
+            Route::get('/TestDeliveryRoutes/{var?}', [DeliveryDayController::class, 'TestDeliveryRoutes'])->name('TestDeliveryRoutes');
+            Route::post('/store/{var?}', [DeliveryDayController::class, 'store'])->name('store');
+            Route::get('/show/{var?}', [DeliveryDayController::class, 'show'])->name('show');
+            Route::get('/cron_test', [DeliveryDayController::class, 'cron_test'])->name('cron_test');
+            Route::post('/canceled/{var?}', [DeliveryDayController::class, 'canceled'])->name('canceled');
+            Route::get('/designer_report/{var?}', [DeliveryDayController::class, 'designer_report'])->name('designer_report');
+            Route::get('/routes_labels/{var?}', [DeliveryDayController::class, 'routes_labels'])->name('routes_labels');
+            Route::post('/get_routes_labels_files/', [DeliveryDayController::class, 'get_routes_labels_files'])->name('get_routes_labels_files');
+            Route::get('create_label_files/{var?}', [DeliveryDayController::class, 'create_label_files'])->name('create_label_files');
+        });
+
+        //  deliveries
+        Route::group(['prefix' => 'deliveries', 'as' => 'deliveries.'], function () {
+            Route::any('/', [DeliveryDayController::class, 'deliveries'])->name('index');
+        });
+
+        //  user_package_subscriptons
+        Route::group(['prefix' => 'user_packages', 'as' => 'user_packages.'], function () {
+            Route::any('/', [UserPackageController::class, 'index'])->name('index');
+            Route::get('/show/{var?}', [UserPackageController::class, 'show'])->name('show');
+            Route::post('/runBulkTrasections/', [UserPackageController::class, 'runBulkTrasections'])->name('runBulkTrasections');
+            Route::post('/cancelThisWeek/', [UserPackageController::class, 'cancelThisWeek'])->name('cancelThisWeek');
+            Route::post('/suspend_delivery/', [UserPackageController::class, 'suspend_delivery'])->name('suspend_delivery');
+            Route::get('/activate_delivery/{var?}', [UserPackageController::class, 'activate_delivery'])->name('activate_delivery');
+            Route::any('/delete/{var?}', [UserPackageController::class, 'destroy'])->name('destroy');
+        });
+        //  Packages
+        Route::group(['prefix' => 'packages', 'as' => 'packages.'], function () {
+            Route::any('/', [PackageController::class, 'index'])->name('index');
+            Route::get('/create', [PackageController::class, 'create'])->name('create');
+            Route::post('/store/{var?}', [PackageController::class, 'store'])->name('store');
+            Route::get('/edit/{var?}', [PackageController::class, 'edit'])->name('edit');
+            Route::post('/update/{var?}', [PackageController::class, 'update'])->name('update');
+            Route::get('/show/{var?}', [PackageController::class, 'show'])->name('show');
+            Route::delete('/delete/{var?}', [PackageController::class, 'destroy'])->name('destroy');
+            Route::post('/{id}/restore', [PackageController::class, 'restore'])->name('restore');
+        });
+        // Route::any('/transactions/{var?}', [UserPackagePaymentController::class, 'transactions'])->name('transactions');
+        Route::group(['prefix' => 'transactions', 'as' => 'transactions.'], function () {
+            Route::any('/', [UserPackagePaymentController::class, 'index'])->name('index');
+            Route::any('/review', [UserPackagePaymentController::class, 'review'])->name('review');
+            Route::any('/{var?}', [UserPackagePaymentController::class, 'index'])->name('user_transections');
+            Route::any('/show/{var?}', [UserPackagePaymentController::class, 'show'])->name('show');
+            Route::any('/refund/{var?}', [UserPackagePaymentController::class, 'refund'])->name('refund');
         });
 
         //  Categories

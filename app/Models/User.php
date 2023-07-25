@@ -37,13 +37,15 @@ class User extends Authenticatable
     'delivery_city',
     'delivery_state',
     'delivery_zip',
+    'delivery_lat',
+    'delivery_long',
+    'billing_lat',
+    'billing_long',
     'deactivated',
+    'stripe_id',
     'email_verified_at',
     'password'
   ];
-
-
-
 
   public function getFinalStatusAttribute()
   {
@@ -61,6 +63,59 @@ class User extends Authenticatable
       ->generateSlugsFrom('first_name')
       ->saveSlugsTo('slug');
   }
+
+  // public function packages()
+  // {
+  //   return $this->belongsToMany(Package::class, 'user_packages');
+  // }
+
+  public function user_packages()
+  {
+    return $this->hasMany(UserPackage::class);
+  }
+  public function getTotalSubscriptionAttribute()
+  {
+    return $this->user_packages->count();
+  }
+  public function payments()
+  {
+    return $this->hasManyThrough(UserPackagePayment::class, UserPackage::class);
+  }
+
+
+  public static function boot()
+  {
+    parent::boot();
+
+    self::creating(function ($model) {
+      // ... code here
+    });
+
+    self::updating(function (User $user) {
+      // if ($user->wasChanged('deactivated') && ($user->deactivated === 1)) {
+      //   UserPackage::where('user_id', $user->id)->delete();
+      // } else {
+      // }
+    });
+
+    self::updated(function (User $user) {
+
+      // if ($user->wasChanged('deactivated') && ($user->deactivated === 1)) {
+      //   UserPackage::where('user_id', $user->id)->delete();
+      // } else {
+      // }
+    });
+
+    self::deleting(function ($model) {
+      // ... code here
+    });
+
+    self::deleted(function ($model) {
+      // ... code here
+    });
+  }
+
+
 
 
   protected $hidden = [

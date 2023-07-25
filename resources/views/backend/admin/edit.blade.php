@@ -18,7 +18,7 @@
       </div>
     @endif
     <div class=" mb-4 h-100">
-      <div class="card-body">
+      <div class="card-body admin-edit">
         <h4>Edit Admin</h4>
         <div class="col-12 p-0">
           {!! Form::open([
@@ -86,17 +86,18 @@
             <div class="col-lg-4 col-md-12">
               <div class="form-group">
                 <label for="current_Image">Current Image</label>
-                <div class="w-100">
-                  @if (isset($adminDetail->image) && !empty($adminDetail->image))
-                    <img alt="Admin Photo" width="40px" height="40px" id="current_Image"
-                      class="img-profile rounded-circle"
-                      src="{{ asset('public' . \Illuminate\Support\Facades\Storage::url($admin->image)) }}"
-                      alt="amherst">
-                  @else
-                    <img class="img-profile rounded-circle"
-                      src="{{ asset('public/assets/backend/img/placeholder.jpg') }}" alt="amherst">
-                  @endif
-                </div>
+                  <div class="w-100">
+                      @if (isset($adminDetail->image) && !empty($adminDetail->image))
+                          <img alt="Admin Photo" width="40px" height="40px" id="current_Image"
+                               class="img-profile rounded-circle"
+                               src="{{ asset('public' . \Illuminate\Support\Facades\Storage::url($adminDetail->image)) }}"
+                               alt="amherst">
+                      @else
+                          <img class="img-profile rounded-circle"
+                               src="{{ asset('public/assets/backend/img/placeholder.jpg') }}" alt="amherst">
+                      @endif
+                  </div>
+
               </div>
             </div>
             <div class="col-lg-4 col-md-12">
@@ -161,7 +162,7 @@
 
           <div class="row my-5">
             <div class="col-lg-4 col-md-12 text-end">
-              <a class="back" href="#">Cancel</a>
+              <a class="back" href="{{ route('admin.subadmins.list') }}">Cancel</a>
             </div>
             <div class="col-lg-4 col-md-12">
               <div class="form-group">

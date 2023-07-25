@@ -26,7 +26,7 @@ class AddRoleToAdminsTable extends Migration
     public function down()
     {
         Schema::table('admins', function (Blueprint $table) {
-            $table->dropColumn('role');
+            $table->dropColumn('role')->default(null)->nullable();
         });
     }
 }

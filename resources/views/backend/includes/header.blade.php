@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+<nav class="navbar navbar-expand navbar-light topbar mb-4 static-top shadow">
 
     <!-- Sidebar Toggle (Topbar) -->
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -10,16 +10,26 @@
     <?php $admin = Auth::guard('admin')->user()?>
     <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small text-capitalize">{{ (isset($admin->name) ? $admin->name : '') }}</span>
-                <img class="img-profile rounded-circle" src="{{ (isset($admin->image) ? asset($admin->image) : asset('/public/storage/placeholder.jpg')) }}">
+            <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline small text-capitalize text-white">{{ (isset($admin->name) ? $admin->name : '') }}</span>
+                <img alt="Admin Photo" width="40px" height="40px" id="current_Image"
+                     class="img-profile rounded-circle"
+                     src="{{ asset('public' . \Illuminate\Support\Facades\Storage::url($admin->image)) }}"
+                     alt="amherst">
             </a>
+
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="{{route('admin.accounts.settings')}}">
+                <a class="dropdown-item " href="{{route('admin.accounts.account')}}">
+                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    My Profile
+                </a>
+                 @if (Auth::user()->role == 'super_admin')
+                <a class="dropdown-item " href="{{route('admin.accounts.settings')}}">
                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                     Settings
                 </a>
+                @endif
 
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">

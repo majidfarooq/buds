@@ -91,9 +91,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input autocomplete="name" autofocus
-                                       class="form-control @error('title') is-invalid @enderror"
-                                       id="title" name="title" type="text">
+                                <input autocomplete="name" autofocus class="form-control @error('title') is-invalid @enderror" id="title" name="title" type="text">
                                 @error('title')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

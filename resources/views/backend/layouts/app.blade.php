@@ -6,31 +6,30 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-{{--    <meta name="viewport" content="width=device-width, initial-scale=1">--}}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>Dashboard</title>
-
     <!-- Custom fonts for this template-->
     <link href="{{asset('public/assets/backend/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="{{asset('public/assets/backend/css/sb-admin-2.min.css')}}" rel="stylesheet">
-    <link href="{{asset('public/assets/backend/css/style.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <link href="{{asset('public/assets/backend/css/style.css')}}" rel="stylesheet">
     <!-- Custom styles for this page -->
     <link href="{{asset('public/assets/backend/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-
     <link href="{{ asset('public/assets/backend/css/jquery-ui.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('public/assets/backend/vendor/datatables/Buttons-2.0.1/css/buttons.bootstrap.css') }}" rel="stylesheet"/>
-    
     <link href="{{asset('public/assets/backend/favicon.ico')}}" rel="icon" type="image/x-icon"/>
+
     <style>
         td.action {
             display: flex;
             gap: 10px;
         }
     </style>
+
     @yield('style')
 </head>
 
@@ -46,7 +45,10 @@
     <div id="content-wrapper" class="d-flex flex-column">
 
         <!-- Main Content -->
-        <div id="content" class="my-5">
+        <div id="content" class="">
+            <!-- Topbar -->
+        @include('backend.includes.header')
+        <!-- End of Topbar -->
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
@@ -100,9 +102,10 @@
 <script src="{{asset('public/assets/backend/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{asset('public/assets/backend/js/sb-admin-2.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- Page level plugins -->
 <script src="{{asset('public/assets/backend/vendor/datatables/jquery.dataTables.min.js')}}"></script>
-<script src="{{asset('public/assets/backend/vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
 <!-- Page level custom scripts -->
 <script src="{{asset('public/assets/backend/js/demo/datatables-demo.js')}}"></script>

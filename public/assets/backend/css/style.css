@@ -50,15 +50,33 @@ h5 {
     font-size: 32px;
     line-height: 44px;
 }
-
+h6 {
+    font-family: 'nunitolight';
+    font-size: 20px;
+    line-height: 27px;
+    color: rgba(0, 0, 0, 0.5);
+  }
 h5 {
     color: #4E73DF;
 }
-
+h4 {
+    font-family: 'nunitobold';
+    font-size: 2em;
+    line-height: 27px;
+    color: #000000;
+    margin-bottom: 15px;
+}
 h2 {
     font-size: 1.2rem;
 }
-
+p {
+    font-family: 'nunitoregular';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 2em;
+    line-height: 27px;
+    color: #000000;
+}
 .btn-primary {
     font-family: 'nunitoregular';
     background: #2B324F;
@@ -70,7 +88,7 @@ h2 {
 }
 
 .btn-user h4 {
-    font-size: 20px;
+    font-size: 2em;
     line-height: 27px;
     color: #FFFFFF;
 }
@@ -217,7 +235,7 @@ h2 span {
     float: right;
 }
 
-.form-group .form-control {
+ .form-control {
     -moz-box-shadow: inset 0 0 10px #ccc;
     -webkit-box-shadow: inset 0 0 10px #ccc;
     box-shadow: inset 0 0 10px #ccc;
@@ -338,11 +356,184 @@ label {
     line-height: 22px;
     color: #A7A3A3;
 }
-
+label {
+    color: #000000;
+}
+select {
+    background-image: url(../img/select.png);
+    background-position: right;
+    background-repeat: no-repeat;
+    background-position-x: 98%;
+    background-position-y: 50%;
+    appearance: none;
+}
 .card-body {
-    padding-top: 10px;
+    padding: 20px 60px;
+}.card.rounded-3 {
+     padding: 20px !important;
+     border: 2px solid dashed #000;
+ }
+.card-header {
+    background-color: transparent;
+    border: none;
+    margin-bottom: 25px;
+    padding: 20px 30px;
+}
+.user_subscription_list {
+    border: 1px solid #A7A3A3;
+}
+.user_subscription_list a {
+    color: #000;
+    font-size: 1.6em;
+    text-decoration-line: underline;
+    color: #2B324F;
+}
+.user_subscription {
+    border: 1px dashed #000000;
+    padding: 2px;
+    margin: 2px;
+}
+.small, small {
+    font-weight: 400;
+    font-size: 1.6em;
 }
 
+.btn-primary h4 {
+    margin: 0px;
+}
+.table-bordered td, .table-bordered thead th{
+    font-family: 'nunitoregular';
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    color: #000000;
+}
+.table-bordered thead th{
+    border: 1px solid #A7A3A3;
+}
+.table-bordered tbody td{
+    border: none;
+}
+.table-bordered tbody tr td:nth-child(1){
+    border-right: 1px solid #A7A3A3;
+
+}
+.table-bordered tbody tr td:nth-child(2){
+    border-right: 1px solid #A7A3A3;
+
+}
+.dollar-section i {
+    border: solid thin;
+    border-radius: 50%;
+    padding: 4px 8px;
+    color: #82BB25;
+}
+.error-msg {
+    color: #F00000;
+}
+.error-msg i{
+    color: #F00000;
+
+}
+.btn-primary h4 {
+    font-family: 'nunitoregular';
+}
+.delivery-text h1 {
+    font-size: 4em;
+    color: #000000;
+    font-family: 'nunitobold';
+}
+.delivery-text h1 span {
+    font-size: 20px;
+}
+.form-check .form-check-label {
+    font-size: 2em;
+}
+.inline {
+    display: flex;
+    align-items: end;
+}
+.delivery-text h1 {
+    display: flex;
+    align-items: end;
+    margin-bottom: 1rem;
+}
+.inline .form-outline {
+    padding: 0px;
+}
+.card-bottom-expresisson {
+    display: flex;
+}
+.card-bottom-expresisson div {
+    padding: 0px;
+}
+.csv-input label.form-label {
+    margin: 0px 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+.pyment-card img {
+    margin: 0px 4px;
+}
+[type="radio"]:checked,
+[type="radio"]:not(:checked) {
+    position: absolute;
+    left: -9999px;
+}
+[type="radio"]:checked + label,
+[type="radio"]:not(:checked) + label
+{
+    position: relative;
+    padding-left: 40px;
+    cursor: pointer;
+    line-height: 25px;
+    display: inline-block;
+    color: #666;
+}
+[type="radio"]:checked + label:before,
+[type="radio"]:not(:checked) + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 29px;
+    height: 29px;
+    border: 4px solid #000000;
+    border-radius: 100%;
+    background: #fff;
+}
+[type="radio"]:checked + label:after,
+[type="radio"]:not(:checked) + label:after {
+    content: '';
+    width: 16px;
+    height: 16px;
+    background: #000;
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    border-radius: 100%;
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+[type="radio"]:not(:checked) + label:after {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+[type="radio"]:checked + label:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+.subscribe-btn button{
+    font-size: 2.5em;
+}
+.lining label {
+    color: #4E73DF;
+    font-size: 4em;
+    margin: 14px;
+}
 @media (min-width: 768px) {
     .sidebar {
         width: 10rem !important;

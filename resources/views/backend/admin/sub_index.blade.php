@@ -60,9 +60,13 @@
     <div class="card shadow shadow mb-4 user-list">
       <div class="d-flex justify-content-between align-items-center py-3 mx-3">
         <h5>Administrators</h5>
-        <a class="btn btn-primary btn-user" href="{{ route('admin.subadmins.create') }}">
-          <h4>Create New Administrator</h4>
-        </a>
+          @if (Auth::user()->role == 'super_admin')
+              <a class="btn btn-primary btn-user" href="{{ route('admin.subadmins.create') }}">
+                  <h4>Create New Administrator</h4>
+              </a>
+          @else
+          @endif
+
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -94,26 +98,23 @@
                     </td>
                     <td>{{ \Carbon\Carbon::parse($admin->created_at)->format('d F, h:m A, Y') }}</td>
                     <td class=" action">
-                      {{-- <a href="{{ route('admin.subadmins.show', $encrypted) }}">
-                          <button type="submit" data-title="Show" class="btn btn-circle">
-                            <i class="fas fa-eye" aria-hidden="true"></i>
-                          </button>
-                        </a> --}}
-                        <a href="{{ route('admin.subadmins.edit', $encrypted) }}">
-                          <button type="submit" data-title="Edit" class="btn btn-circle">
-                            <i class="fas fa-user-edit"></i>
-                          </button>
-                        </a>
-                        <a onclick="return confirm(' you want to delete?');"
-                          href="{{ route('admin.subadmins.destroy', $admin->id) }}">
-                          <button type="submit" data-title="Delete" class="btn btn-circle">
-                            <i class="fas fa-trash-alt"></i>
-                          </button>
-                        </a>
+{{--                       <a href="{{ route('admin.subadmins.show', $encrypted) }}">--}}
+{{--                          <button type="submit" data-title="Show" class="btn btn-circle">--}}
+{{--                            <i class="fas fa-eye" aria-hidden="true"></i>--}}
+{{--                          </button>--}}
+{{--                        </a>--}}
                       @if (Auth::user()->role == 'super_admin')
-          
-
-                        
+                            <a href="{{ route('admin.subadmins.edit', $encrypted) }}">
+                                <button type="submit" data-title="Edit" class="btn btn-circle btn-success text-white">
+                                    <i class="fas fa-user-edit"></i>
+                                </button>
+                            </a>
+                            <a onclick="return confirm(' you want to delete?');"
+                               href="{{ route('admin.subadmins.destroy', $admin->id) }}">
+                                <button type="submit" data-title="Delete" class="btn btn-circle btn-success text-white">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </a>
                       @else
                         {{-- <a><button type="submit" data-title="No action Allowed" class="btn btn-circle"><i class="fas fa-times"></i></button></a> --}}
                       @endif

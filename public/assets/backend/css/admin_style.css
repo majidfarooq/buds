@@ -35,3 +35,9 @@ form.user .btn-user {
 .sidebar .sidebar-brand {
   height: auto;
 }
+h6{
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 27px;
+  color: rgba(0, 0, 0, 0.5);
+}

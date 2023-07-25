@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Blade;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -27,14 +28,18 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        Blade::directive('currency_format', function ($money) {
+            return "<?php echo '$ '.number_format($money, 2); ?>";
+        });
+        Blade::directive('percent_format', function ($money) {
+            return "<?php echo number_format($money, 2).' %'; ?>";
+        });
+        // $menus = Menu::orderBy('id', 'ASC')->get();
+        // View::share('menus', $menus);
+        // $header = Menu::whereSlug('header')->with('MenuItem')->first();
+        // View::share('header', $header);
 
-        $menus = Menu::orderBy('id', 'ASC')->get();
-        View::share('menus', $menus);
-
-        $header = Menu::whereSlug('header')->with('MenuItem')->first();
-        View::share('header', $header);
-
-        $footer = Menu::whereSlug('footer')->orderBy('id', 'ASC')->first();
-        View::share('footer', $footer);
+        // $footer = Menu::whereSlug('footer')->orderBy('id', 'ASC')->first();
+        // View::share('footer', $footer);
     }
 }

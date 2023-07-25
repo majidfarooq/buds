@@ -8,7 +8,7 @@
 
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Settings</h1>
+    <h1 class="h3 mb-0 text-white">My Profile</h1>
   </div>
   <div class="row">
     <div class="col-12">
@@ -28,20 +28,10 @@
     </div>
 
     <!--end col-->
-
   </div>
-
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <a class="nav-link active" id="accountSettings-tab" data-toggle="tab" href="#accountSettings" role="tab" aria-controls="accountSettings" aria-selected="true">Account Settings</a>
-    </li>
-  </ul>
-  <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="accountSettings" role="tabpanel" aria-labelledby="accountSettings-tab">
     <?php $admin = Auth::guard('admin')->user() ?>
-
     <!-- Content Row -->
-      <div class="row mt-4">
+      <div class="row mt-4 setting-section">
         <!-- Content Column -->
         <div class="col-lg-6 mb-4">
           <div class="card shadow mb-4 h-100">
@@ -157,10 +147,8 @@
             </div>
           </div>
         </div>
-      </div>
 
-    </div>
-  </div>
+      </div>
 
 @endsection
 

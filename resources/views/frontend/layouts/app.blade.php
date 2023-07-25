@@ -44,6 +44,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
     <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{{asset('public/assets/frontend/css/bootstrap.min.css')}}" rel="stylesheet"/>
     <link href="{{asset('public/assets/frontend/css/style.css')}}" rel="stylesheet"/>
     <link href="{{asset('public/assets/frontend/css/styles.css')}}" rel="stylesheet"/>
 
@@ -56,6 +57,8 @@
 @yield('content')
 @include('frontend.includes.footer')
 
+
+<script src="{{asset('public/assets/frontend/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('public/assets/frontend/js/popper.js')}}" type="text/javascript"></script>
 <script src="{{asset('public/assets/frontend/js/jquery-3.5.1.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('public/assets/frontend/js/image-uploader.min.js')}}" type="text/javascript"></script>
@@ -67,7 +70,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
 <!-- Core theme JS-->
 <script src="{{asset('public/assets/frontend/js/scripts.js')}}" type="text/javascript"></script>
-
 @stack('js')
 @yield('script')
 

@@ -26,7 +26,7 @@
       </div>
     @endif
     <div class=" mb-4 h-100">
-      <div class="card-body">
+      <div class="card-body admin-edit">
         <div class="col-12 p-0">
           {!! Form::open(['route' => 'admin.subadmins.store', 'id' => 'registerAdmin', 'files' => true]) !!}
           <div class="row">
@@ -61,7 +61,6 @@
                 @enderror
               </div>
             </div>
-
           </div>
           <div class="row">
             <div class="col-lg-4 col-md-12">
@@ -109,10 +108,9 @@
 
           </div>
         </div>
-
         <div class="row my-4">
           <div class="col-lg-4 col-md-12 text-end">
-            <a class="back" href="#">Cancel</a>
+            <a class="back" href="{{ route('admin.subadmins.list') }}">Cancel</a>
           </div>
           <div class="col-lg-4 col-md-12">
             <div class="form-group">
